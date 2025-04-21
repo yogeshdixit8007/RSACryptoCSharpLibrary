@@ -1,16 +1,16 @@
-name: Build and Publish for iOS ARM64 with .NET 9
+name: Build and Add UnmanagedExports Package
 
 on:
   push:
     branches:
-      - main
+      - main  # Trigger on push to main branch
   pull_request:
     branches:
-      - main
+      - main  # Trigger on pull request to main branch
 
 jobs:
   build:
-    runs-on: macos-latest  # Use a macOS runner for iOS build
+    runs-on: macos-latest  # Use macOS runner for building .NET iOS projects
 
     steps:
     - name: Checkout code
@@ -19,24 +19,27 @@ jobs:
     - name: Set up .NET
       uses: actions/setup-dotnet@v2
       with:
-        dotnet-version: '9.0'  # Target .NET 9
+        dotnet-version: '9.0'  # Use .NET 9
+
+    - name: Add UnmanagedExports package
+      run: dotnet add package UnmanagedExports --version 1.2.6  # Add the UnmanagedExports package
 
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore  # Restore the project dependencies
 
     - name: Build the project
-      run: dotnet build --configuration Release
+      run: dotnet build --configuration Release  # Build the project in Release configuration
 
-    - name: Publish for iOS ARM64
-      run: dotnet publish --configuration Release --runtime ios-arm64 --self-contained false
+    - name: Publish the project for iOS
+      run: dotnet publish --configuration Release --runtime ios-arm64 --self-contained false  # Publish for iOS ARM64
 
     - name: Zip the output
       run: |
         cd bin/Release/net9.0-ios/ios-arm64/publish
-        zip -r output.zip .
+        zip -r output.zip .  # Create a zip file with the build output
 
-    - name: Upload dylib file
+    - name: Upload the artifact
       uses: actions/upload-artifact@v2
       with:
         name: RSACryptoLibrary
-        path: bin/Release/net9.0-ios/ios-arm64/publish/output.zip
+        path: bin/Release/net9.0-ios/ios-arm64/publish/output.zip  # Upload the .dylib artifact
