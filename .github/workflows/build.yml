@@ -33,6 +33,9 @@ jobs:
     - name: Publish the project for iOS
       run: dotnet publish --configuration Release --runtime ios-arm64 --self-contained false  # Publish for iOS ARM64
 
+    - name: List files in output directory
+      run: ls -alh bin/Release/net9.0-ios/ios-arm64/publish  # List files in the publish directory
+
     - name: Zip the output
       run: |
         cd bin/Release/net9.0-ios/ios-arm64/publish
