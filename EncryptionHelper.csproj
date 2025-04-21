@@ -1,12 +1,22 @@
- <PropertyGroup>
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
     <TargetFramework>net9.0-ios</TargetFramework>
-    <RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
     <OutputType>Library</OutputType>
-    <UseNativeAot>true</UseNativeAot>
+    <RuntimeIdentifiers>ios-arm64</RuntimeIdentifiers>
     <PublishAot>true</PublishAot>
     <SelfContained>true</SelfContained>
+    <StripSymbols>true</StripSymbols>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <NativeLib>Shared</NativeLib>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseSystemRuntime>true</UseSystemRuntime>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="*" PrivateAssets="All" />
+    <TrimmerRootAssembly Include="System.Private.CoreLib" />
   </ItemGroup>
+
+</Project>
