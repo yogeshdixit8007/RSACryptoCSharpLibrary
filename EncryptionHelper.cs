@@ -1,23 +1,50 @@
 using System;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Security.Cryptography;
-using RGiesecke.DllExport;
 
 public static class EncryptionHelper
 {
-    // Export the Encrypt method so it can be called from unmanaged code (Swift)
-    [DllExport("Encrypt", CallingConvention = CallingConvention.Cdecl)]
-    public static string Encrypt(string input, string publicKey)
+    // Use static buffers for simplicity (or use interop-safe string return mechanisms)
+    private static string lastResult = "";
+
+    [UnmanagedCallersOnly(EntryPoint = "Encrypt", CallConvs = new[] { typeof(CallConvCdecl) })]
+    public static IntPtr Encrypt(IntPtr inputPtr, IntPtr publicKeyPtr)
     {
-        // Encryption logic here using the provided publicKey
-        return "EncryptedData"; // Return dummy encrypted data for now
+        try
+        {
+            string input = Marshal.PtrToStringAnsi(inputPtr);
+            string publicKey = Marshal.PtrToStringAnsi(publicKeyPtr);
+
+            // TODO: Implement real RSA encryption logic here
+            string encrypted = $"[ENCRYPTED:{input}]"; // Placeholder
+
+            lastResult = encrypted;
+            return Marshal.StringToHGlobalAnsi(lastResult);
+        }
+        catch
+        {
+            return IntPtr.Zero;
+        }
     }
 
-    // Export the Decrypt method so it can be called from unmanaged code (Swift)
-    [DllExport("Decrypt", CallingConvention = CallingConvention.Cdecl)]
-    public static string Decrypt(string encryptedInput, string privateKey)
+    [UnmanagedCallersOnly(EntryPoint = "Decrypt", CallConvs = new[] { typeof(CallConvCdecl) })]
+    public static IntPtr Decrypt(IntPtr encryptedInputPtr, IntPtr privateKeyPtr)
     {
-        // Decryption logic here using the provided privateKey
-        return "DecryptedData"; // Return dummy decrypted data for now
+        try
+        {
+            string encryptedInput = Marshal.PtrToStringAnsi(encryptedInputPtr);
+            string privateKey = Marshal.PtrToStringAnsi(privateKeyPtr);
+
+            // TODO: Implement real RSA decryption logic here
+            string decrypted = $"[DECRYPTED:{encryptedInput}]"; // Placeholder
+
+            lastResult = decrypted;
+            return Marshal.StringToHGlobalAnsi(lastResult);
+        }
+        catch
+        {
+            return IntPtr.Zero;
+        }
     }
 }
