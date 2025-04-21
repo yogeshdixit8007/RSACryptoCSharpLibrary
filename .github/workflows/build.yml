@@ -20,22 +20,21 @@ jobs:
         dotnet-version: 9.0.x
 
     - name: Restore dependencies
-      run: dotnet restore
-
-    - name: Add UnmanagedExports package
-      run: dotnet add package UnmanagedExports --version 1.2.6
+      run: dotnet restore EncryptionHelper.csproj
 
     - name: Build and publish .dylib for iOS (arm64)
       run: |
-        dotnet publish RSACryptoCSharpLibrary.csproj \
+        dotnet publish EncryptionHelper.csproj \
           -c Release \
           -f net9.0-ios \
           -r ios-arm64 \
           --self-contained true \
+          /p:NativeLib=Shared \
+          /p:StripSymbols=true \
           -o bin/Release/net9.0-ios/ios-arm64/publish
 
     - name: Upload .dylib artifact
       uses: actions/upload-artifact@v3
       with:
-        name: RSACryptoLibrary-dylib
-        path: bin/Release/net9.0-ios/ios-arm64/publish
+        name: EncryptionHelper-dylib
+        path: bin/Release/net9.0-ios/ios-arm64/publish/*.dylib
