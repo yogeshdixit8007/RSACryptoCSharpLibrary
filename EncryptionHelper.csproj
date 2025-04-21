@@ -1,17 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
  <PropertyGroup>
+    <TargetFramework>net9.0-ios</TargetFramework>
+    <RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
     <OutputType>Library</OutputType>
-    <TargetFramework>net9.0-ios</TargetFramework> <!-- .NET 9 target -->
-    <RuntimeIdentifiers>ios-arm64</RuntimeIdentifiers>
+    <UseNativeAot>true</UseNativeAot>
+    <PublishAot>true</PublishAot>
+    <SelfContained>true</SelfContained>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="UnmanagedExports" Version="1.2.6" /> <!-- For exporting methods -->
+    <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="*" PrivateAssets="All" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="EncryptionHelper.cs" />
-  </ItemGroup>
-
-</Project>
