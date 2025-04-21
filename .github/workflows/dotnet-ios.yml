@@ -1,0 +1,42 @@
+name: Build and Publish for iOS ARM64 with .NET 9
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: macos-latest  # Use a macOS runner for iOS build
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: '9.0'  # Target .NET 9
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build the project
+      run: dotnet build --configuration Release
+
+    - name: Publish for iOS ARM64
+      run: dotnet publish --configuration Release --runtime ios-arm64 --self-contained false
+
+    - name: Zip the output
+      run: |
+        cd bin/Release/net9.0-ios/ios-arm64/publish
+        zip -r output.zip .
+
+    - name: Upload dylib file
+      uses: actions/upload-artifact@v2
+      with:
+        name: RSACryptoLibrary
+        path: bin/Release/net9.0-ios/ios-arm64/publish/output.zip
