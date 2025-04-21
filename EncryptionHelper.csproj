@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework> <!-- Or any appropriate version -->
+ <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <TargetFramework>net9.0-ios</TargetFramework> <!-- .NET 9 target -->
+    <RuntimeIdentifiers>ios-arm64</RuntimeIdentifiers>
   </PropertyGroup>
 
   <ItemGroup>
