@@ -1,23 +1,19 @@
 using System;
-using System.Security.Cryptography;
-using System.Text;
+using System.Runtime.InteropServices;
 
-namespace MyCSharpLibrary
+public static class EncryptionHelper
 {
-    public class EncryptionHelper
+    [DllExport("Encrypt", CallingConvention = CallingConvention.Cdecl)]
+    public static string Encrypt(string input, string publicKey)
     {
-        public string Encrypt(string input, string publicKey)
-        {
-            // Encryption logic here using publicKey
-            var encrypted = Convert.ToBase64String(Encoding.UTF8.GetBytes(input));
-            return encrypted;
-        }
+        // Encryption logic here
+        return "EncryptedData";
+    }
 
-        public string Decrypt(string encryptedInput, string privateKey)
-        {
-            // Decryption logic here using privateKey
-            var decrypted = Encoding.UTF8.GetString(Convert.FromBase64String(encryptedInput));
-            return decrypted;
-        }
+    [DllExport("Decrypt", CallingConvention = CallingConvention.Cdecl)]
+    public static string Decrypt(string encryptedInput, string privateKey)
+    {
+        // Decryption logic here
+        return "DecryptedData";
     }
 }
