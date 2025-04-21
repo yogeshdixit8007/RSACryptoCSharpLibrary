@@ -34,7 +34,7 @@ jobs:
           -o bin/Release/net9.0-ios/ios-arm64/publish
 
     - name: Upload .dylib artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v3.1.2
       with:
         name: EncryptionHelper-dylib
         path: bin/Release/net9.0-ios/ios-arm64/publish/*.dylib
