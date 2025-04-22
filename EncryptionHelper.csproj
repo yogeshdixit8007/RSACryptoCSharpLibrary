@@ -1,21 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <!-- Target the .NET 9.0 framework and iOS runtime -->
     <TargetFramework>net9.0-ios</TargetFramework>
-    <!-- Enable AOT Compilation for iOS -->
+    <RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
+    <OutputType>Library</OutputType>
+    <UseNativeAot>true</UseNativeAot>
     <PublishAot>true</PublishAot>
     <PublishAotUsingRuntimePack>true</PublishAotUsingRuntimePack>
-    <!-- Specify the runtime identifier for iOS ARM64 -->
-    <RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
-    <!-- Optional: Set the output path for the published files -->
-    <PublishDir>./publish/</PublishDir>
-
+    <EnableDynamicLoading>false</EnableDynamicLoading>
   </PropertyGroup>
-
-  <!-- No need for a System.Runtime.InteropServices package reference -->
-  <ItemGroup>
-    <!-- Add any other dependencies here -->
-  </ItemGroup>
 
 </Project>
