@@ -10,7 +10,13 @@
     <RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
     <!-- Optional: Set the output path for the published files -->
     <PublishDir>./publish/</PublishDir>
+
   </PropertyGroup>
+<ItemGroup>
+  <!-- Explicitly add System.Runtime.InteropServices if needed (it should be included by default in .NET 9.0) -->
+  <PackageReference Include="System.Runtime.InteropServices" />
+</ItemGroup>
+
 
   <!-- No need for a System.Runtime.InteropServices package reference -->
   <ItemGroup>
