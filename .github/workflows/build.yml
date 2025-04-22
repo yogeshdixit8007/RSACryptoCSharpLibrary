@@ -8,32 +8,37 @@ on:
 
 jobs:
   build-ios-aot:
-    runs-on: macos-latest  # macOS runner is required for iOS
+    runs-on: macos-latest  # macOS is required for iOS workloads
 
     env:
-      DOTNET_VERSION: '9.0.100-preview.4'  # Update to your preview version
+      DOTNET_VERSION: '9.0.100-preview.4'  # Use the exact preview version you require
 
     steps:
-      - name: Checkout code
+      # Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
+      # Setup .NET 9 SDK
       - name: Setup .NET 9 SDK
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
-      - name: Install iOS Workload (only once)
-        run: |
-          dotnet workload install ios --skip-manifest-update
+      # Install iOS workload
+      - name: Install iOS workload
+        run: dotnet workload install ios --skip-manifest-update
 
+      # Restore NuGet dependencies
       - name: Restore dependencies
         run: dotnet restore
 
-      - name: Build native AOT iOS dynamic lib
+      # Build and publish the native AOT iOS dylib
+      - name: Build native AOT iOS dylib
         run: dotnet publish -c Release -r ios-arm64 /p:PublishAot=true /p:NativeLib=Shared
 
+      # Upload the iOS dylib artifact
       - name: Upload iOS dylib artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@3a4c008aab7f37300512b2ffbdb7d9c5c308e9b8  # SHA for v3.1.2
         with:
           name: ios-native-lib
           path: bin/Release/net9.0-ios/ios-arm64/native/*.dylib
