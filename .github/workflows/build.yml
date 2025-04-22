@@ -32,8 +32,7 @@ jobs:
         run: dotnet publish -c Release -r ios-arm64 /p:PublishAot=true /p:NativeLib=Shared
 
       - name: Upload iOS dylib artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v2.3.1
         with:
           name: ios-native-lib
-          path: |
-            bin/Release/net9.0-ios/ios-arm64/native/*.dylib
+          path: bin/Release/net9.0-ios/ios-arm64/native/*.dylib
