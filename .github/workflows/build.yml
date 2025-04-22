@@ -11,7 +11,7 @@ jobs:
     runs-on: macos-latest
 
     env:
-      DOTNET_VERSION: '9.0.4'
+      DOTNET_VERSION: '9.0.203'
 
     steps:
       - name: Checkout code
