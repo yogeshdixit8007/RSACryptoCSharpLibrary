@@ -35,4 +35,5 @@ jobs:
         uses: actions/upload-artifact@main
         with:
           name: ios-native-lib
-          path:  bin/Release/net9.0-ios/ios-arm64/publish/native/*.dylib 
+          path:  bin/Release/net9.0-ios/ios-arm64/native/EncryptionHelper.dylib
+
