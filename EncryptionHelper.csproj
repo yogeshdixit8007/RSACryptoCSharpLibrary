@@ -1,11 +1,19 @@
-<PropertyGroup>
-  <TargetFramework>net9.0-ios</TargetFramework>
-  <RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
-  <OutputType>Library</OutputType>
+<Project Sdk="Microsoft.NET.Sdk">
 
-  <!-- Required for native AOT -->
-  <PublishAot>true</PublishAot>
-  <PublishAotUsingRuntimePack>true</PublishAotUsingRuntimePack>
-  <NativeLib>Shared</NativeLib> <!-- This is CRUCIAL to produce .dylib -->
-  <IlcGenerateCompleteTypeMetadata>true</IlcGenerateCompleteTypeMetadata>
-</PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net9.0-ios</TargetFramework>
+    <RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
+    <OutputType>Library</OutputType>
+
+    <!-- AOT Settings -->
+    <PublishAot>true</PublishAot>
+    <PublishAotUsingRuntimePack>true</PublishAotUsingRuntimePack>
+    <NativeLib>Shared</NativeLib>
+
+    <!-- Optional but helpful -->
+    <IlcGenerateCompleteTypeMetadata>true</IlcGenerateCompleteTypeMetadata>
+    <StripSymbols>true</StripSymbols>
+    <SelfContained>true</SelfContained>
+  </PropertyGroup>
+
+</Project>
