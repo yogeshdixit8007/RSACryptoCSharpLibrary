@@ -1,4 +1,4 @@
-name: Build iOS .dylib for Swift Integration
+name: Build iOS AOT Library
 
 on:
   push:
@@ -7,34 +7,33 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
-    runs-on: macos-latest
+  build-ios-aot:
+    runs-on: macos-latest  # macOS runner is required for iOS
+
+    env:
+      DOTNET_VERSION: '9.0.100-preview.4'  # Update to your preview version
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Setup .NET 9 SDK
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 9.0.x
+      - name: Setup .NET 9 SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
 
-    - name: Restore dependencies
-      run: dotnet restore EncryptionHelper.csproj
+      - name: Install iOS Workload (only once)
+        run: |
+          dotnet workload install ios --skip-manifest-update
 
-    - name: Build and publish .dylib for iOS (arm64)
-      run: |
-        dotnet publish EncryptionHelper.csproj \
-          -c Release \
-          -f net9.0-ios \
-          -r ios-arm64 \
-          --self-contained true \
-          /p:NativeLib=Shared \
-          /p:StripSymbols=true \
-          -o bin/Release/net9.0-ios/ios-arm64/publish
+      - name: Restore dependencies
+        run: dotnet restore
 
-    - name: Upload .dylib artifact
-      uses: actions/upload-artifact@v2  # Ensure the correct version is used
-      with:
-        name: EncryptionHelper-dylib
-        path: bin/Release/net9.0-ios/ios-arm64/publish/*.dylib
+      - name: Build native AOT iOS dynamic lib
+        run: dotnet publish -c Release -r ios-arm64 /p:PublishAot=true /p:NativeLib=Shared
+
+      - name: Upload iOS dylib artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ios-native-lib
+          path: bin/Release/net9.0-ios/ios-arm64/native/*.dylib
