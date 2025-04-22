@@ -1,22 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0-ios</TargetFramework>
-    <OutputType>Library</OutputType>
-    <RuntimeIdentifiers>ios-arm64</RuntimeIdentifiers>
+    <!-- Target the .NET 9.0 framework and iOS runtime -->
+    <TargetFramework>net9.0-ios</TargetFramework>
+    <!-- Enable AOT Compilation for iOS -->
     <PublishAot>true</PublishAot>
-    <SelfContained>true</SelfContained>
-    <StripSymbols>true</StripSymbols>
-    <InvariantGlobalization>true</InvariantGlobalization>
-    <NativeLib>Shared</NativeLib>
-    <Nullable>enable</Nullable>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <UseSystemRuntime>true</UseSystemRuntime>
+    <PublishAotUsingRuntimePack>true</PublishAotUsingRuntimePack>
+    <!-- Specify the runtime identifier for iOS ARM64 -->
+    <RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
+    <!-- Optional: Set the output path for the published files -->
+    <PublishDir>./publish/</PublishDir>
   </PropertyGroup>
 
+  <!-- No need for a System.Runtime.InteropServices package reference -->
   <ItemGroup>
-    <TrimmerRootAssembly Include="System.Private.CoreLib" />
+    <!-- Add any other dependencies here -->
   </ItemGroup>
 
 </Project>
