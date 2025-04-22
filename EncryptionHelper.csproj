@@ -12,11 +12,6 @@
     <PublishDir>./publish/</PublishDir>
 
   </PropertyGroup>
-<ItemGroup>
-  <!-- Explicitly add System.Runtime.InteropServices if needed (it should be included by default in .NET 9.0) -->
-  <PackageReference Include="System.Runtime.InteropServices" />
-</ItemGroup>
-
 
   <!-- No need for a System.Runtime.InteropServices package reference -->
   <ItemGroup>
