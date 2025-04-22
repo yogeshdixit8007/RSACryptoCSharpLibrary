@@ -16,7 +16,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Runtime.InteropServices" Version="9.0.0" />
+    <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />
     <TrimmerRootAssembly Include="System.Private.CoreLib" />
   </ItemGroup>
 
